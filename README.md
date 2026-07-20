@@ -5,7 +5,10 @@ A Build In Public University game for turning one meaningful goal into observabl
 Play the game: see [GAME.md](GAME.md).
 
 
+The implementation is documented in [docs/marvin-witness-flow.md](docs/marvin-witness-flow.md). It detects explicit witness commitments in Marvin mentions, schedules a seven-day follow-up, persists the job ID, and only then posts the acknowledgement.
+
 The guide uses OpenRouter when `OPENROUTER_API_KEY` is configured and deterministic stub mode otherwise. Stub mode is for local development only; it is not evidence of live model behavior.
+
 
 ## Core loop
 

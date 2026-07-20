@@ -6,6 +6,10 @@ from fastapi.testclient import TestClient
 from shared_game import STAGES
 from shared_game.api import app
 from shared_game.model_registry import available_models
+from shared_game.scheduler import ScheduledJob
+from shared_game.witness import build_commitment, detect_witness_request
+from shared_game.witness_flow import WitnessFlow
+from shared_game.witness_store import WitnessStore
 
 
 def test_stage_contract():
@@ -60,6 +64,40 @@ def test_unknown_model_is_rejected(monkeypatch, tmp_path):
     client = TestClient(app)
     response = client.post("/games", json={"player_id": "bad", "model": "not/a-real-model"})
     assert response.status_code == 422
+
+
+def test_witness_detection_and_ordered_acknowledgement(tmp_path):
+    tweet = {
+        "id": "2079261354448302166",
+        "conversation_id": "2079260209118122399",
+        "author": "leo_guinan",
+        "created_at": "2026-07-20T17:45:12Z",
+        "text": "Useful leading indicators: Sales closed. I have my scoreboard. @marvin_panics is my witness.",
+    }
+    assert detect_witness_request(tweet)
+    commitment = build_commitment(tweet)
+    assert commitment.follow_up_at == "2026-07-27T17:45:12+00:00"
+
+    events = []
+    class FakeScheduler:
+        def schedule(self, *, kind, run_at, payload):
+            events.append(("schedule", kind, run_at, payload))
+            return ScheduledJob(id="job-123", kind=kind, run_at=run_at, payload=payload)
+    class FakeWriter:
+        def reply(self, tweet_id, text):
+            assert events[0][0] == "schedule"
+            events.append(("reply", tweet_id, text))
+            return {"id": "ack-456"}
+
+    result = WitnessFlow(WitnessStore(tmp_path / "witness.sqlite3"), FakeScheduler(), FakeWriter()).record(tweet)
+    assert result.status == "acknowledged"
+    assert result.schedule_id == "job-123"
+    assert result.acknowledgement_tweet_id == "ack-456"
+    assert [event[0] for event in events] == ["schedule", "reply"]
+
+
+def test_witness_request_requires_explicit_language():
+    assert not detect_witness_request({"id": "1", "text": "@marvin_panics nice thread"})
 
 
 def test_email_sequence_is_public_safe():

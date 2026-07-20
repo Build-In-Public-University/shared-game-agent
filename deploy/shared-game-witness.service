@@ -1,0 +1,13 @@
+[Unit]
+Description=Shared Game Marvin witness mention worker
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/shared-game-agent
+Environment=HOME=/root
+Environment=SHARED_GAME_DB=/var/lib/shared-game-agent/game.sqlite3
+Environment=WITNESS_QUEUE=/var/lib/shared-game-agent/witness-jobs.jsonl
+Environment=XURL_APP=marvin-x
+EnvironmentFile=-/etc/shared-game-agent.env
+ExecStart=/opt/shared-game-agent/venv/bin/python /opt/shared-game-agent/scripts/witness_worker.py
