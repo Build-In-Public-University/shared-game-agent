@@ -96,6 +96,30 @@ def test_witness_detection_and_ordered_acknowledgement(tmp_path):
     assert [event[0] for event in events] == ["schedule", "reply"]
 
 
+def test_witness_dry_run_ack_can_be_upgraded_once(tmp_path):
+    tweet = {
+        "id": "2", "conversation_id": "2", "text": "I will make one sale. @marvin_panics is my witness.",
+        "created_at": "2026-07-20T00:00:00Z",
+    }
+    store = WitnessStore(tmp_path / "witness.sqlite3")
+    existing = build_commitment(tweet)
+    existing.schedule_id = "job-existing"
+    existing.acknowledgement_tweet_id = "dry-run-2"
+    existing.status = "acknowledged"
+    store.save(existing)
+    replies = []
+    class Scheduler:
+        def schedule(self, **kwargs):
+            raise AssertionError("must not schedule a duplicate job")
+    class Writer:
+        def reply(self, tweet_id, text):
+            replies.append((tweet_id, text))
+            return {"id": "live-2"}
+    result = WitnessFlow(store, Scheduler(), Writer()).record(tweet)
+    assert result.acknowledgement_tweet_id == "live-2"
+    assert len(replies) == 1
+
+
 def test_witness_request_requires_explicit_language():
     assert not detect_witness_request({"id": "1", "text": "@marvin_panics nice thread"})
 
