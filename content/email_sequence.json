@@ -1,0 +1,16 @@
+{
+  "name": "The Seven-Day Shared Game",
+  "version": "0.1.0",
+  "audience": "People with a meaningful 30-90 day outcome who are willing to let evidence contradict their self-story.",
+  "emails": [
+    {"id":"welcome","day":0,"subject":"Your goal is not the game yet","purpose":"Set the contract","body":"You do not need a better vision. You need one outcome, one scoreboard, and seven days of evidence. Reply with the result you want and the date by which movement should be visible."},
+    {"id":"day-1","day":1,"subject":"Name the outcome","purpose":"Make the goal concrete","body":"Choose one outcome that matters within 30 days. Not a category. Not a mood. A result someone else could recognize. Complete: By [date], I will [outcome]."},
+    {"id":"day-2","day":2,"subject":"What would count as evidence?","purpose":"Define the scoreboard","body":"Ask: what could a skeptical observer see, hear, or inspect if this were moving? Write one metric, artifact, event, or behavior. If nothing could count, you have a wish, not a game."},
+    {"id":"day-3","day":3,"subject":"Let the mirror be inconvenient","purpose":"Expose contradiction","body":"Give the guide your goal and the last seven days of relevant actions. Ask what your behavior implies you actually prioritize. Do not explain the contradiction before recording it."},
+    {"id":"day-4","day":4,"subject":"Choose a seven-day probe","purpose":"Design the experiment","body":"Pick the smallest repeated action that could generate new evidence. Include a trigger, a frequency, and a failure condition. You are designing a probe, not a new personality."},
+    {"id":"day-5","day":5,"subject":"Add a witness","purpose":"Make the game shared","body":"Choose a person, public receipt, or scheduled check that can make the action visible. Private intention is easy to revise. A witness makes the record heavier."},
+    {"id":"day-6","day":6,"subject":"Do not improve the result","purpose":"Record reality","body":"Run the experiment and record what happened. Include avoidance, friction, surprises, and misses. The result is not a performance review. It is the instrument reading."},
+    {"id":"day-7","day":7,"subject":"Update, do not celebrate too early","purpose":"Choose the next move","body":"What did reality falsify? Choose continue, modify, or stop. State the next experiment and the evidence that would change your mind. Completion means an update, not a victory lap."},
+    {"id":"follow-up","day":8,"subject":"Should we run the next game together?","purpose":"Qualify a coaching conversation","body":"If the game produced a real contradiction and you want help designing the next probe, reply with your outcome, evidence, and repeating obstacle. That is enough to see whether coaching is useful."}
+  ]
+}

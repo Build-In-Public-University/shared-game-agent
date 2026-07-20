@@ -1,0 +1,17 @@
+{
+  "default_model": "deepseek/deepseek-v4-flash",
+  "models": [
+    {
+      "id": "deepseek/deepseek-v4-flash",
+      "label": "DeepSeek V4 Flash",
+      "role": "fast_candidate",
+      "notes": "Efficiency-oriented candidate for responsive game turns."
+    },
+    {
+      "id": "deepseek/deepseek-v4-pro",
+      "label": "DeepSeek V4 Pro",
+      "role": "deep_candidate",
+      "notes": "Higher-capability candidate for comparison on contradiction and experiment design."
+    }
+  ]
+}

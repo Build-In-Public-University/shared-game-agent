@@ -1,0 +1,10 @@
+{
+  "name": "shared-game-agent",
+  "private_data": ["player responses", "email addresses", "API keys", "game database"],
+  "public_data": ["email sequence copy", "synthetic examples", "game stage definitions"],
+  "external_side_effects": {
+    "openrouter": "outbound model request only when OPENROUTER_API_KEY is configured",
+    "email": "not implemented in v0; no email is sent",
+    "deployment": "not performed by this repository build"
+  }
+}

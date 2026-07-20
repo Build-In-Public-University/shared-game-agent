@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.env
+*.sqlite3
+*.db
+.private/
+*.egg-info/
+experiments/*.private.json
