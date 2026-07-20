@@ -21,7 +21,8 @@ class XurlWriter:
         if DRY_RUN:
             return {"id": f"dry-run-{tweet_id}"}
         result = subprocess.run(["xurl", "--app", APP, "reply", tweet_id, text], capture_output=True, text=True, check=True)
-        return json.loads(result.stdout)
+        body = json.loads(result.stdout)
+        return body.get("data", body)
 
 def mentions() -> list[dict[str, Any]]:
     result = subprocess.run(["xurl", "--app", APP, "mentions", "-n", "20"], capture_output=True, text=True, check=True)
